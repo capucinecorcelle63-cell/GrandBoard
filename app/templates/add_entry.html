@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% block title %}Ajouter une entrée - Grandboard{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8 col-xl-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+  <h1 class="h3 mb-4">Ajouter une nouvelle entrée</h1>
+  <form method="post" enctype="multipart/form-data" class="row g-3">
+          {{ form.hidden_tag() }}
+          <div class="col-md-8">
+            <label for="title" class="form-label">{{ t('add_entry') }}</label>
+            {{ form.title(class='form-control', id='title') }}
+            {% for error in form.title.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-4">
+            <label for="category" class="form-label">{{ t('categories') }}</label>
+            {{ form.category(class='form-select', id='category') }}
+            <div class="mt-2">
+              <a href="{{ url_for('main.manage_categories') }}" class="btn btn-outline-secondary btn-sm">+ Ajouter/Modifier une catégorie</a>
+            </div>
+            {% for error in form.category.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="theme_principal" class="form-label">{{ t('theme_1') }}</label>
+            {{ form.theme_principal(class='form-select', id='theme_principal') }}
+            <div class="mt-2">
+              <button type="submit" name="goto_manage_themes" value="1" class="btn btn-outline-secondary btn-sm">+ Ajouter/Modifier un thème 1 ou 2</button>
+            </div>
+            {% for error in form.theme_principal.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="theme_associe" class="form-label">{{ t('theme_2') }}</label>
+            {{ form.theme_associe(class='form-select', id='theme_associe') }}
+            {% for error in form.theme_associe.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-12">
+            <label for="description" class="form-label">Description</label>
+            {{ form.description(class='form-control', rows=3, id='description') }}
+            <div class="form-text">200 caractères max.</div>
+            {% for error in form.description.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="image_upload" class="form-label">Télécharger une image</label>
+            {{ form.image_upload(class='form-control', id='image_upload') }}
+            {% for error in form.image_upload.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="image_url" class="form-label">Lien de l'image</label>
+            {{ form.image_url(class='form-control', id='image_url') }}
+            {% for error in form.image_url.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="link" class="form-label">Lien</label>
+            {{ form.link(class='form-control', id='link') }}
+            {% for error in form.link.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-dark">Ajouter l'entrée</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

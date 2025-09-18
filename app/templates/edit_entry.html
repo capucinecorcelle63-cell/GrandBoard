@@ -1,0 +1,118 @@
+{% extends 'base.html' %}
+{% block title %}Modifier l'entrée - Grandboard{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8 col-xl-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+  <h1 class="h3 mb-4">{{ t('edit_entry') }}</h1>
+        <form method="post" enctype="multipart/form-data" class="row g-3">
+          {% if entry.image_filename or entry.image_url %}
+            <div class="mb-3 text-center">
+              <label class="form-label">Image actuelle</label><br>
+              {% if entry.image_filename %}
+                <img src="{{ url_for('static', filename=entry.image_filename) }}" alt="Image actuelle" class="img-fluid rounded" style="max-height:180px;">
+              {% elif entry.image_url %}
+                <img src="{{ entry.image_url }}" alt="Image actuelle" class="img-fluid rounded" style="max-height:180px;">
+              {% endif %}
+            </div>
+          {% endif %}
+          {{ form.hidden_tag() }}
+          <div class="col-md-8">
+            <label for="title" class="form-label">{{ t('edit_entry') }}</label>
+            {{ form.title(class='form-control', id='title') }}
+            {% for error in form.title.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-4">
+            <label for="category" class="form-label">{{ t('categories') }}</label>
+            {{ form.category(class='form-select', id='category') }}
+            <div class="mt-2">
+              <a href="{{ url_for('main.manage_categories') }}" class="btn btn-outline-secondary btn-sm">+ Ajouter/Modifier une catégorie</a>
+            </div>
+            {% for error in form.category.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="theme_principal" class="form-label">{{ t('theme_1') }}</label>
+            {{ form.theme_principal(class='form-select', id='theme_principal') }}
+            <div class="mt-2">
+              <a href="{{ url_for('main.manage_themes') }}" class="btn btn-outline-secondary btn-sm">+ Ajouter/Modifier un thème 1 ou 2</a>
+            </div>
+            {% for error in form.theme_principal.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="theme_associe" class="form-label">{{ t('theme_2') }}</label>
+            {{ form.theme_associe(class='form-select', id='theme_associe') }}
+            {% for error in form.theme_associe.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-12">
+            <label for="description" class="form-label">Description</label>
+            {{ form.description(class='form-control', rows=3, id='description') }}
+            <div class="form-text">200 caractères max.</div>
+            {% for error in form.description.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="image_upload" class="form-label">Télécharger une image</label>
+            {{ form.image_upload(class='form-control', id='image_upload') }}
+            {% for error in form.image_upload.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="image_url" class="form-label">Lien de l'image</label>
+            {{ form.image_url(class='form-control', id='image_url') }}
+            {% for error in form.image_url.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-md-6">
+            <label for="link" class="form-label">Lien</label>
+            {{ form.link(class='form-control', id='link') }}
+            {% for error in form.link.errors %}
+              <div class="invalid-feedback d-block">{{ error }}</div>
+            {% endfor %}
+          </div>
+          <div class="col-12 text-end">
+            <button type="submit" class="btn btn-dark">Enregistrer les modifications</button>
+            <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary ms-2">Annuler</a>
+            <button type="button" class="btn btn-outline-danger ms-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer</button>
+            </div>
+          </form>
+        </div>
+        <!-- Delete Modal and Form outside main form -->
+        <div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="deleteModalLabel">Confirmation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fermer"></button>
+              </div>
+              <div class="modal-body">
+                Êtes-vous sûr de vouloir supprimer cette entrée ?
+              </div>
+              <div class="modal-footer">
+                <form method="post" action="{{ url_for('main.delete_entry', entry_id=entry.id) }}">
+                  {{ delete_form.csrf_token }}
+                  <button type="submit" class="btn btn-danger">Oui</button>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Non</button>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

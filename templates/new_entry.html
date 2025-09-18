@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="form-container">
+  <h2>Nouvelle entrée</h2>
+  <form method="post" enctype="multipart/form-data" class="big-form">
+    <label>Titre<br>
+      <input name="title" required value="{{ form.title if form.title }}">
+    </label>
+
+    <label>Image (upload)
+      <input type="file" name="image_file" accept="image/*">
+    </label>
+
+    <label>Ou URL image
+      <input name="image_url" placeholder="https://example.com/image.jpg" value="{{ form.image_url if form.image_url }}">
+    </label>
+
+    <label>Catégorie
+      Catégorie<br>
+      <select name="category" required>
+        <option value="">-- choisir --</option>
+        {% for cat in categories %}
+          <option value="{{ cat.id }}" {% if form.category and form.category|int == cat.id %}selected{% endif %}>{{ cat.name }}</option>
+        {% endfor %}
+      </select>
+      <div class="mt-2">
+        <a href="{{ url_for('main.manage_categories') }}" class="btn btn-outline-secondary btn-sm">+ Ajouter/Modifier une catégorie</a>
+      </div>
+    </label>
+
+    <label>Thème principal
+      <input name="theme" value="{{ form.theme if form.theme }}">
+    </label>
+
+    <label>Thème lié
+      <input name="related_theme" value="{{ form.related_theme if form.related_theme }}">
+    </label>
+
+    <label>Description (max 200 caractères)
+      <textarea name="description" maxlength="200">{{ form.description if form.description }}</textarea>
+      <div class="char-count"><span id="count">0</span>/200</div>
+    </label>
+
+    <label>Lien (http(s)://...)
+      <input name="link" value="{{ form.link if form.link }}">
+    </label>
+
+    <button type="submit">Ajouter</button>
+  </form>
+</div>
+
+<script>
+const textarea = document.querySelector('textarea[name="description"]');
+const counter = document.getElementById('count');
+if(textarea){
+  counter.textContent = textarea.value.length;
+  textarea.addEventListener('input', ()=> counter.textContent = textarea.value.length);
+}
+</script>
+{% endblock %}

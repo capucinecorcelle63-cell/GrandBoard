@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block title %}Choisir la langue - Grandboard{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-6 col-xl-4">
+    <div class="card shadow-sm mt-5">
+      <div class="card-body">
+  <h2 class="h4 mb-4" style="color: #111;">{{ t('change_language') }}</h2>
+        <form method="post">
+          {{ form.hidden_tag() }}
+          <div class="mb-3">
+            <label class="form-label">{{ t('language') }}</label>
+            {{ form.language(class="form-select") }}
+          </div>
+          <button type="submit" class="btn btn-dark w-100" style="color: #fff; border-color: #111;">{{ t('change_language') }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

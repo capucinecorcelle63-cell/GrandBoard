@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Welcome to Grandboard</h1>
+  <p>This is your homepage. Entries and categories will appear here.</p>
+  {% if entries %}
+    <ul>
+      {% for entry in entries %}
+        <li>{{ entry.title }} ({{ entry.created_at.strftime('%d %B %Y') }})</li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No entries found for this month.</p>
+  {% endif %}
+{% endblock %}
+exit()

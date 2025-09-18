@@ -1,0 +1,50 @@
+/* Paramètres sidebar button hover: black bg, white text */
+.btn-outline-primary.btn-sm:hover, .btn-outline-primary.btn-sm:focus {
+  background-color: #111 !important;
+  color: #fff !important;
+  border-color: #111 !important;
+}
+body {
+  background: #f8f9fa;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+}
+
+.entry-card {
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.entry-card:hover {
+  box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+  transform: translateY(-4px);
+}
+.entry-image {
+  height: 200px;
+  object-fit: cover;
+  border-top-left-radius: 1rem;
+  border-top-right-radius: 1rem;
+}
+.category-badge {
+  background: #fff;
+  color: #222;
+  font-weight: 600;
+  border: 1px solid #eee;
+}
+.theme-badge {
+  background: rgba(255,255,255,0.7);
+  color: #222;
+  font-weight: 500;
+}
+/* Flashy category colors */
+.category-badge[data-color="01befe"] { color: #01befe; }
+.category-badge[data-color="ffdd00"] { color: #ffdd00; }
+.category-badge[data-color="ff7d00"] { color: #ff7d00; }
+.category-badge[data-color="ff006d"] { color: #ff006d; }
+.category-badge[data-color="adff02"] { color: #adff02; }
+.category-badge[data-color="8f00ff"] { color: #8f00ff; }
+
+@media (max-width: 768px) {
+  .entry-image {
+    height: 140px;
+  }
+}

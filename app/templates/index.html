@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block title %}Grandboard - Entrées{% endblock %}
+{% block content %}
+<div class="row">
+  <aside class="col-12 col-lg-3 mb-4">
+    <div class="p-3 rounded shadow-sm bg-white">
+  <h2 class="h5 mb-3" style="color: #111;">{{ t('filters') }}</h2>
+      <form method="get" class="vstack gap-3">
+        <select class="form-select" name="category" style="color: #111;">
+          <option value="" style="color: #111;">{{ t('all_categories') }}</option>
+          {% for category in categories %}
+            <option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %} style="color: #111;">{{ category.name }}</option>
+          {% endfor %}
+        </select>
+        <select class="form-select" name="type" style="color: #111;">
+          <option value="" style="color: #111;">{{ t('all_themes_1') }}</option>
+          {% for type_val in all_types %}
+            <option value="{{ type_val }}" {% if selected_type == type_val %}selected{% endif %} style="color: #111;">{{ type_val }}</option>
+          {% endfor %}
+        </select>
+        <select class="form-select" name="theme" style="color: #111;">
+          <option value="" style="color: #111;">{{ t('all_themes_2') }}</option>
+          {% for th in all_themes %}
+            <option value="{{ th }}" {% if selected_theme == th %}selected{% endif %} style="color: #111;">{{ th }}</option>
+          {% endfor %}
+        </select>
+        <div class="mb-2">
+          <label class="form-label" style="color: #111;">Mois :</label>
+          <div class="d-flex flex-wrap gap-1">
+            <button type="submit" name="month" value="all" class="btn btn-outline-dark btn-sm {% if request.args.get('month') == 'all' or not request.args.get('month') %}active{% endif %}">Tous les mois</button>
+            {% for m, label in months %}
+              <button type="submit" name="month" value="{{ m }}" class="btn btn-outline-dark btn-sm {% if request.args.get('month') == m %}active{% endif %}">{{ label }}</button>
+            {% endfor %}
+          </div>
+        </div>
+        <div class="mb-2">
+          <label class="form-label" style="color: #111;">{{ t('year') }} :</label>
+          <select class="form-select" name="year" style="color: #111; width: 100%;">
+            <option value="all" {% if request.args.get('year') == 'all' or not request.args.get('year') %}selected{% endif %}>Toutes les années</option>
+            {% for y in years %}
+              <option value="{{ y }}" {% if request.args.get('year') == y|string %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+          </select>
+        </div>
+        <button type="submit" class="btn btn-dark">{{ t('filter') }}</button>
+      </form>
+      <hr class="my-4">
+      <div class="param-section">
+        <h2 class="h5 mb-3" style="color: #111;">{{ t('settings') }}</h2>
+        <div class="d-grid gap-2">
+          <a href="{{ url_for('main.set_language') }}" class="btn btn-outline-primary btn-sm" style="color: #111; border-color: #111;">{{ t('language') }}</a>
+          <a href="{{ url_for('main.set_background') }}" class="btn btn-outline-primary btn-sm" style="color: #111; border-color: #111;">{{ t('background') }}</a>
+          <a href="{{ url_for('main.change_password') }}" class="btn btn-outline-primary btn-sm" style="color: #111; border-color: #111;">{{ t('password') }}</a>
+        </div>
+      </div>
+    </div>
+  </aside>
+  <section class="col-12 col-lg-9">
+    {% if entries %}
+      <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
+        {% for entry in entries %}
+          <div class="col">
+            <a href="{{ url_for('main.edit_entry', entry_id=entry[0].id) }}" style="text-decoration: none;">
+              <article class="card h-100 shadow-sm entry-card" style="background-color: {{ entry[0].category.color }};">
+                {% if entry[0].image_filename %}
+                  <img src="{{ url_for('static', filename=entry[0].image_filename) }}" class="card-img-top entry-image" alt="{{ entry[0].title }}">
+                {% elif entry[0].image_url %}
+                  <img src="{{ entry[0].image_url }}" class="card-img-top entry-image" alt="{{ entry[0].title }}">
+                {% endif %}
+                <div class="card-body" style="color: #111;">
+                  <h3 class="card-title fw-bold" style="color: #111;">{{ entry[0].title }}</h3>
+                  <div class="d-flex gap-2 mb-2">
+                    <span class="badge rounded-pill category-badge" style="color: #111; background: rgba(255,255,255,0.5); border: none;">{{ entry[0].category.name }}</span>
+                    <span class="badge rounded-pill theme-badge" style="color: #111; background: rgba(255,255,255,0.5); border: none;">{{ entry[0].theme_principal }}</span>
+                    {% if entry[0].theme_associe %}
+                      <span class="badge rounded-pill theme-badge" style="color: #111; background: rgba(255,255,255,0.5); border: none;">{{ entry[0].theme_associe }}</span>
+                    {% endif %}
+                  </div>
+                  <p class="card-text small" style="color: #111;">{{ entry[0].description }}</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 text-end">
+                  {% if entry[0].link %}
+                    <a class="btn btn-outline-light" href="{{ entry[0].link }}" target="_blank" style="color: black; border-color: black;">Voir le lien</a>
+                  {% endif %}
+                </div>
+              </article>
+            </a>
+          </div>
+        {% endfor %}
+      </div>
+    {% else %}
+  <div class="alert alert-info">Aucune entrée pour ce mois.</div>
+    {% endif %}
+  </section>
+</div>
+{% endblock %}

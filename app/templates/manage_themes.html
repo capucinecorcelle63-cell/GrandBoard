@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block title %}Gérer les thèmes - Grandboard{% endblock %}
+{% block content %}
+<div class="container py-4">
+  <h2 class="mb-4">Gérer les thèmes</h2>
+  <div class="row">
+    <div class="col-md-6">
+      <h4>Thème 1</h4>
+      <ul class="list-group mb-3">
+        {% for theme in themes_1 %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <form method="post" class="d-flex w-100">
+            <input type="hidden" name="theme_id" value="{{ theme.id }}">
+            <input type="hidden" name="type" value="1">
+            <input type="text" name="name" value="{{ theme.name }}" class="form-control me-2">
+            <button type="submit" name="action" value="edit" class="btn btn-sm btn-primary me-2">Modifier</button>
+            <button type="submit" name="action" value="delete" class="btn btn-sm btn-danger">Supprimer</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+      <form method="post" class="d-flex">
+        <input type="hidden" name="type" value="1">
+        <input type="text" name="name" placeholder="Nouveau thème 1" class="form-control me-2">
+        <button type="submit" name="action" value="add" class="btn btn-success">Ajouter</button>
+      </form>
+    </div>
+    <div class="col-md-6">
+      <h4>Thème 2</h4>
+      <ul class="list-group mb-3">
+        {% for theme in themes_2 %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          <form method="post" class="d-flex w-100">
+            <input type="hidden" name="theme_id" value="{{ theme.id }}">
+            <input type="hidden" name="type" value="2">
+            <input type="text" name="name" value="{{ theme.name }}" class="form-control me-2">
+            <button type="submit" name="action" value="edit" class="btn btn-sm btn-primary me-2">Modifier</button>
+            <button type="submit" name="action" value="delete" class="btn btn-sm btn-danger">Supprimer</button>
+          </form>
+        </li>
+        {% endfor %}
+      </ul>
+      <form method="post" class="d-flex">
+        <input type="hidden" name="type" value="2">
+        <input type="text" name="name" placeholder="Nouveau thème 2" class="form-control me-2">
+        <button type="submit" name="action" value="add" class="btn btn-success">Ajouter</button>
+      </form>
+    </div>
+  </div>
+  <div class="mt-4">
+    <a href="{{ url_for('main.add_entry') }}" class="btn btn-secondary">Retour</a>
+  </div>
+</div>
+{% endblock %}
