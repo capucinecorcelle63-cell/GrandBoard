@@ -188,21 +188,9 @@ def index():
     entries_dates = db.session.query(Entry.created_at).order_by(Entry.created_at.desc()).all()
     years = sorted({dt.year for (dt,) in entries_dates}, reverse=True)
     lang = session.get('language', 'fr')
-    import locale
-    locale_map = {
-        'fr': 'fr_FR.UTF-8',
-        'en': 'en_US.UTF-8',
-        'de': 'de_DE.UTF-8',
-        'es': 'es_ES.UTF-8',
-    }
-    try:
-        locale.setlocale(locale.LC_TIME, locale_map.get(lang, 'fr_FR.UTF-8'))
-    except locale.Error:
-        pass
-    months = [
-        (str(i).zfill(2), datetime(2000, i, 1).strftime('%B').capitalize())
-        for i in range(1, 13)
-    ]
+    from .translations import translations
+    month_names = translations.get(lang, translations['fr'])['months']
+    months = [(str(i).zfill(2), month_names[i-1]) for i in range(1, 13)]
     # Get selected filters
     selected_month = request.args.get("month")
     selected_year = request.args.get("year")

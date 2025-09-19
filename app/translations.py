@@ -30,6 +30,7 @@ translations = {
         'success_language': 'Langue changée !',
     'success_background': 'Fond changé !',
     'year': 'Année',
+    'months': ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'],
     },
     'en': {
         'filters': 'Filters',
@@ -58,6 +59,7 @@ translations = {
         'success_language': 'Language changed!',
     'success_background': 'Background changed!',
     'year': 'Year',
+    'months': ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
     },
     'de': {
         'filters': 'Filter',
@@ -86,6 +88,7 @@ translations = {
         'success_language': 'Sprache geändert!',
     'success_background': 'Hintergrund geändert!',
     'year': 'Jahr',
+    'months': ['Januar', 'Februar', 'März', 'April', 'Mai', 'Juni', 'Juli', 'August', 'September', 'Oktober', 'November', 'Dezember'],
     },
     'es': {
         'filters': 'Filtros',
@@ -114,6 +117,7 @@ translations = {
         'success_language': '¡Idioma cambiado!',
     'success_background': '¡Fondo cambiado!',
     'year': 'Año',
+    'months': ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'],
     }
 }
 

@@ -27,7 +27,7 @@
         <div class="mb-2">
           <label class="form-label" style="color: #111;">Mois :</label>
           <div class="d-flex flex-wrap gap-1">
-            <button type="submit" name="month" value="all" class="btn btn-outline-dark btn-sm {% if request.args.get('month') == 'all' or not request.args.get('month') %}active{% endif %}">Tous les mois</button>
+            <button type="submit" name="month" value="all" class="btn btn-outline-dark btn-sm {% if request.args.get('month') == 'all' or not request.args.get('month') %}active{% endif %}">{{ t('see_all') }}</button>
             {% for m, label in months %}
               <button type="submit" name="month" value="{{ m }}" class="btn btn-outline-dark btn-sm {% if request.args.get('month') == m %}active{% endif %}">{{ label }}</button>
             {% endfor %}
