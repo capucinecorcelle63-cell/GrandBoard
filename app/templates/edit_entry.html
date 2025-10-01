@@ -27,9 +27,10 @@
           </div>
           <div class="col-md-4">
             <label for="category" class="form-label">{{ t('categories') }}</label>
-            {{ form.category(class='form-select', id='category') }}
-            <div class="mt-2">
-              <a href="{{ url_for('main.manage_categories') }}" class="btn btn-outline-secondary btn-sm">+ Ajouter/Modifier une catégorie</a>
+            {{ form.category(class='form-select', id='category', disabled=True) }}
+            <div class="mt-2 d-flex gap-2">
+              <button type="button" class="btn btn-outline-primary btn-sm" id="enable-category">{{ t('change_category') if t('change_category') != 'change_category' else 'Changer la catégorie' }}</button>
+              <a href="{{ url_for('main.manage_categories') }}" class="btn btn-outline-secondary btn-sm">+ {{ t('manage_categories') }}</a>
             </div>
             {% for error in form.category.errors %}
               <div class="invalid-feedback d-block">{{ error }}</div>
@@ -68,11 +69,6 @@
             {% endfor %}
           </div>
           <div class="col-md-6">
-            <label for="image_url" class="form-label">Lien de l'image</label>
-            {{ form.image_url(class='form-control', id='image_url') }}
-            {% for error in form.image_url.errors %}
-              <div class="invalid-feedback d-block">{{ error }}</div>
-            {% endfor %}
           </div>
           <div class="col-md-6">
             <label for="link" class="form-label">Lien</label>
@@ -83,6 +79,18 @@
           </div>
           <div class="col-12 text-end">
             <button type="submit" class="btn btn-dark">Enregistrer les modifications</button>
+            <script>
+              document.addEventListener('DOMContentLoaded', function() {
+                var btn = document.getElementById('enable-category');
+                var select = document.getElementById('category');
+                if(btn && select){
+                  btn.addEventListener('click', function(){
+                    select.disabled = false;
+                    select.focus();
+                  });
+                }
+              });
+            </script>
             <a href="{{ url_for('main.index') }}" class="btn btn-outline-secondary ms-2">Annuler</a>
             <button type="button" class="btn btn-outline-danger ms-2" data-bs-toggle="modal" data-bs-target="#deleteModal">Supprimer</button>
             </div>

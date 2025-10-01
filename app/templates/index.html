@@ -36,7 +36,7 @@
         <div class="mb-2">
           <label class="form-label" style="color: #111;">{{ t('year') }} :</label>
           <select class="form-select" name="year" style="color: #111; width: 100%;">
-            <option value="all" {% if request.args.get('year') == 'all' or not request.args.get('year') %}selected{% endif %}>Toutes les années</option>
+            <option value="all" {% if request.args.get('year') == 'all' or not request.args.get('year') %}selected{% endif %}>{{ t('all_years') }}</option>
             {% for y in years %}
               <option value="{{ y }}" {% if request.args.get('year') == y|string %}selected{% endif %}>{{ y }}</option>
             {% endfor %}
@@ -48,9 +48,10 @@
       <div class="param-section">
         <h2 class="h5 mb-3" style="color: #111;">{{ t('settings') }}</h2>
         <div class="d-grid gap-2">
-          <a href="{{ url_for('main.set_language') }}" class="btn btn-outline-primary btn-sm" style="color: #111; border-color: #111;">{{ t('language') }}</a>
-          <a href="{{ url_for('main.set_background') }}" class="btn btn-outline-primary btn-sm" style="color: #111; border-color: #111;">{{ t('background') }}</a>
           <a href="{{ url_for('main.change_password') }}" class="btn btn-outline-primary btn-sm" style="color: #111; border-color: #111;">{{ t('password') }}</a>
+        </div>
+        <div class="d-grid gap-2 mt-3">
+          <a href="{{ url_for('main.add_entry') }}" class="btn btn-success">{{ t('add_entry') }}</a>
         </div>
       </div>
     </div>
@@ -60,8 +61,8 @@
       <div class="row row-cols-1 row-cols-md-2 row-cols-xl-3 g-4">
         {% for entry in entries %}
           <div class="col">
-            <a href="{{ url_for('main.edit_entry', entry_id=entry[0].id) }}" style="text-decoration: none;">
-              <article class="card h-100 shadow-sm entry-card" style="background-color: {{ entry[0].category.color }};">
+              <a href="{{ url_for('main.edit_entry', entry_id=entry[0].id) }}" style="text-decoration: none;">
+                <article class="card h-100 shadow-sm entry-card" style="background-color: {{ entry[0].category.color if entry[0].category.color else '#fff' }};">
                 {% if entry[0].image_filename %}
                   <img src="{{ url_for('static', filename=entry[0].image_filename) }}" class="card-img-top entry-image" alt="{{ entry[0].title }}">
                 {% elif entry[0].image_url %}
@@ -79,9 +80,9 @@
                   <p class="card-text small" style="color: #111;">{{ entry[0].description }}</p>
                 </div>
                 <div class="card-footer bg-transparent border-0 text-end">
-                  {% if entry[0].link %}
-                    <a class="btn btn-outline-light" href="{{ entry[0].link }}" target="_blank" style="color: black; border-color: black;">Voir le lien</a>
-                  {% endif %}
+                    {% if entry[0].link %}
+                      <a class="btn btn-outline-light" href="{{ entry[0].link }}" target="_blank" style="color: black; border-color: black;">{{ t('see_link') }}</a>
+                    {% endif %}
                 </div>
               </article>
             </a>

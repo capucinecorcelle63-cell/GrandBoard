@@ -1,12 +1,12 @@
+@bp.route("/tutoriel")
+def tutoriel():
+    return render_template("tutoriel.html")
 from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, session
 bp = Blueprint("main", __name__)
 from .translations import t
-
-# Inject translation function and selected language into all templates
 @bp.app_context_processor
 def inject_translations():
-    lang = session.get('language', 'fr')
-    return dict(t=lambda key: t(key, lang), lang=lang)
+    return dict(t=t)
 from .forms_password import PasswordForm
 from .forms_password_change import ChangePasswordForm
 from .forms_background import BackgroundForm
