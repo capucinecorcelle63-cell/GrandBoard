@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Tutoriel - Grandboard{% endblock %}
+{% block content %}
+<div class="row justify-content-center">
+  <div class="col-12 col-lg-8 col-xl-6">
+    <div class="card shadow-sm">
+      <div class="card-body">
+        <h1 class="h3 mb-4">Tutoriel d'utilisation du site</h1>
+        <div class="mb-3">
+          <label for="tutoriel-description" class="form-label">Description</label>
+          <textarea id="tutoriel-description" class="form-control" rows="6" readonly>
+Bienvenue sur Grandboard !
+
+Ce site vous permet de :
+- Ajouter des entrées visuelles (images, vidéos, etc.)
+- Organiser vos entrées par catégorie et par mois
+- Filtrer et rechercher facilement vos contenus
+
+Pour ajouter une entrée :
+1. Cliquez sur "Ajouter une entrée".
+2. Remplissez le formulaire avec le titre, la catégorie, le thème, la description et l'image.
+3. Cliquez sur "Ajouter l'entrée" pour enregistrer.
+
+Pour modifier ou supprimer une entrée :
+- Cliquez sur une carte d'entrée, puis utilisez les boutons "Modifier" ou "Supprimer".
+
+Pour gérer les catégories ou les thèmes :
+- Utilisez les boutons correspondants dans le menu ou le formulaire.
+
+Bonne utilisation !
+          </textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

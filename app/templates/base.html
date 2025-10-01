@@ -8,11 +8,12 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
     {% block extra_head %}{% endblock %}
   </head>
-  <body{% if session.background == 'dark' %} style="background-color: #181818; color: #f5f5f5;"{% endif %}>
-    <nav class="navbar navbar-light bg-white border-bottom mb-4">
+  <body style="background-color: #111; color: #fff;">
+    <nav class="navbar navbar-dark bg-dark border-bottom mb-4">
       <div class="container-fluid">
         <a class="navbar-brand fw-bold" href="{{ url_for('main.index') }}">Grandboard</a>
-        <a class="btn btn-outline-dark" href="{{ url_for('main.add_entry') }}">Ajouter une entrée</a>
+  <a class="btn btn-outline-dark" href="{{ url_for('main.add_entry') }}">{{ t('add_entry') }}</a>
+      <a class="btn btn-outline-info ms-2" href="{{ url_for('main.tutoriel') }}">Tutoriel</a>
       </div>
     </nav>
     <main class="container-fluid">
