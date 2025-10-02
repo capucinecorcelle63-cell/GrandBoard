@@ -1,12 +1,16 @@
+from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, session
+bp = Blueprint("main", __name__)
+
 @bp.route("/tutoriel")
 def tutoriel():
     return render_template("tutoriel.html")
-from flask import Blueprint, render_template, request, redirect, url_for, flash, current_app, session
-bp = Blueprint("main", __name__)
 from .translations import t
 @bp.app_context_processor
 def inject_translations():
-    return dict(t=t)
+    def t_fr(key):
+        from .translations import translations
+        return translations['fr'].get(key, key)
+    return dict(t=t_fr)
 from .forms_password import PasswordForm
 from .forms_password_change import ChangePasswordForm
 from .forms_background import BackgroundForm
@@ -142,22 +146,27 @@ def delete_entry(entry_id):
 @bp.route("/edit/<int:entry_id>", methods=["GET", "POST"])
 def edit_entry(entry_id):
     entry = Entry.query.get_or_404(entry_id)
-    form = EntryForm(obj=entry, require_image=False)
-    delete_form = DeleteForm()
     categories = Category.query.order_by(Category.name).all()
-    form.category.choices = [(c.id, c.name) for c in categories]
+    category_choices = [(c.id, c.name) for c in categories]
     themes_1 = Theme.query.filter_by(type=1).order_by(Theme.name).all()
     themes_2 = Theme.query.filter_by(type=2).order_by(Theme.name).all()
-    form.theme_principal.choices = [(t.id, t.name) for t in themes_1]
-    form.theme_associe.choices = [(t.id, t.name) for t in themes_2]
+    theme_principal_choices = [(t.id, t.name) for t in themes_1]
+    theme_associe_choices = [(t.id, t.name) for t in themes_2]
+    form = EntryForm(obj=entry, require_image=False)
+    form.category.choices = category_choices
+    form.theme_principal.choices = theme_principal_choices
+    form.theme_associe.choices = theme_associe_choices
+    # Ensure category field defaults to entry's current category on GET
+    if request.method == "GET":
+        form.category.data = entry.category_id
     if form.validate_on_submit():
         entry.title = form.title.data
+        # Only update category if the user actually changed it
         if form.category.data != entry.category_id:
             entry.category_id = form.category.data
         entry.theme_principal = dict(form.theme_principal.choices).get(form.theme_principal.data, "")
         entry.theme_associe = dict(form.theme_associe.choices).get(form.theme_associe.data, "")
         entry.description = form.description.data
-        entry.link = form.link.data
         if form.image_upload.data and getattr(form.image_upload.data, "filename", ""):
             filename = secure_filename(form.image_upload.data.filename)
             timestamp = datetime.utcnow().strftime("%Y%m%d%H%M%S%f")
@@ -171,6 +180,8 @@ def edit_entry(entry_id):
         db.session.commit()
         flash("Entrée modifiée avec succès !", "success")
         return redirect(url_for("main.index"))
+    else:
+        delete_form = DeleteForm()
     return render_template("edit_entry.html", form=form, delete_form=delete_form, categories=categories, entry=entry, themes_1=themes_1, themes_2=themes_2)
 
 
@@ -187,9 +198,8 @@ def index():
     categories = Category.query.order_by(Category.name).all()
     entries_dates = db.session.query(Entry.created_at).order_by(Entry.created_at.desc()).all()
     years = sorted({dt.year for (dt,) in entries_dates}, reverse=True)
-    lang = session.get('language', 'fr')
     from .translations import translations
-    month_names = translations.get(lang, translations['fr'])['months']
+    month_names = translations['fr']['months']
     months = [(str(i).zfill(2), month_names[i-1]) for i in range(1, 13)]
     # Get selected filters
     selected_month = request.args.get("month")
@@ -213,21 +223,33 @@ def index():
     # Get all unique types and themes for dropdowns
     all_types = [t[0] for t in db.session.query(Entry.theme_principal).distinct().order_by(Entry.theme_principal).all() if t[0]]
     all_themes = [t[0] for t in db.session.query(Entry.theme_associe).distinct().order_by(Entry.theme_associe).all() if t[0]]
-    # Assign random colors to entries, avoiding adjacent duplicates for same category
-    import random
-    palette = ["#E3EA3A", "#D452B8", "#2DC66B", "#98C7F3", "#F393C1", "#1268EF", "#EF8040", "#7284F0"]
+    # Assign complementary colors to each category
+    complementary_palette = [
+        "#FF6F61", # Red
+        "#6B5B95", # Purple
+        "#88B04B", # Green
+        "#F7CAC9", # Pink
+        "#92A8D1", # Blue
+        "#955251", # Brown
+        "#B565A7", # Violet
+        "#009B77", # Teal
+        "#DD4124", # Orange
+        "#45B8AC", # Aqua
+        "#EFC050", # Yellow
+        "#5F4B8B", # Indigo
+        "#D65076", # Magenta
+        "#9B2335", # Burgundy
+        "#DFCFBE", # Beige
+        "#55B4B0", # Turquoise
+    ]
+    category_colors = {}
+    for i, cat in enumerate(categories):
+        category_colors[cat.id] = complementary_palette[i % len(complementary_palette)]
     colored_entries = []
-    last_color_by_category = {}
     for entry in entries:
-        available_colors = palette.copy()
-        # Avoid same color as previous entry of same category
-        last_color = last_color_by_category.get(entry.category_id)
-        if last_color and last_color in available_colors:
-            available_colors.remove(last_color)
-        color = random.choice(available_colors)
-        last_color_by_category[entry.category_id] = color
+        color = category_colors.get(entry.category_id, "#fff")
         colored_entries.append((entry, color))
-    return render_template("index.html", entries=colored_entries, categories=categories, selected_category=cat_id, all_types=all_types, all_themes=all_themes, selected_type=type_filter, selected_theme=theme_filter, months=months, years=years)
+    return render_template("index.html", entries=colored_entries, categories=categories, selected_category=cat_id, all_types=all_types, all_themes=all_themes, selected_type=type_filter, selected_theme=theme_filter, months=months, years=years, category_colors=category_colors)
 
 @bp.route("/add", methods=["GET", "POST"])
 def add_entry():

@@ -5,13 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% block title %}Grandboard{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/category-badge.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/theme-badge.css') }}">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/category-badge.css') }}">
     {% block extra_head %}{% endblock %}
   </head>
   <body style="background-color: #111; color: #fff;">
-    <nav class="navbar navbar-dark bg-dark border-bottom mb-4">
-      <div class="container-fluid">
-        <a class="navbar-brand fw-bold" href="{{ url_for('main.index') }}">Grandboard</a>
+    <nav class="navbar navbar-light bg-white border-bottom mb-4">
+      <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand fw-bold text-dark" href="{{ url_for('main.index') }}">Grandboard</a>
+  <a class="btn btn-outline-light text-dark border-dark" href="{{ url_for('main.add_entry') }}">{{ t('add_entry') }}</a>
       </div>
     </nav>
     <main class="container-fluid">

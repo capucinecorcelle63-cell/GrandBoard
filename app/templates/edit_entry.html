@@ -27,10 +27,9 @@
           </div>
           <div class="col-md-4">
             <label for="category" class="form-label">{{ t('categories') }}</label>
-            {{ form.category(class='form-select', id='category', disabled=True) }}
-            <div class="mt-2 d-flex gap-2">
-              <button type="button" class="btn btn-outline-primary btn-sm" id="enable-category">{{ t('change_category') if t('change_category') != 'change_category' else 'Changer la catégorie' }}</button>
-              <a href="{{ url_for('main.manage_categories') }}" class="btn btn-outline-secondary btn-sm">+ {{ t('manage_categories') }}</a>
+            {{ form.category(class='form-select', id='category') }}
+            <div class="mt-2">
+              <a href="{{ url_for('main.manage_categories') }}" class="btn btn-outline-secondary btn-sm">+ Ajouter/Modifier une catégorie</a>
             </div>
             {% for error in form.category.errors %}
               <div class="invalid-feedback d-block">{{ error }}</div>
@@ -70,13 +69,7 @@
           </div>
           <div class="col-md-6">
           </div>
-          <div class="col-md-6">
-            <label for="link" class="form-label">Lien</label>
-            {{ form.link(class='form-control', id='link') }}
-            {% for error in form.link.errors %}
-              <div class="invalid-feedback d-block">{{ error }}</div>
-            {% endfor %}
-          </div>
+          <!-- Removed link section as requested -->
           <div class="col-12 text-end">
             <button type="submit" class="btn btn-dark">Enregistrer les modifications</button>
             <script>

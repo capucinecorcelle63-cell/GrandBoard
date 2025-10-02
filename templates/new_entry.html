@@ -1,24 +1,23 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="form-container">
-  <h2>Nouvelle entrée</h2>
+  <h2>Ajouter une entrée</h2>
   <form method="post" enctype="multipart/form-data" class="big-form">
-    <label>Titre<br>
-      <input name="title" required value="{{ form.title if form.title }}">
+    <label>Titre de l'entrée<br>
+      <input name="title" required value="{{ form.title if form.title }}" placeholder="Titre de l'entrée">
     </label>
 
-    <label>Image (upload)
+    <label>Image à télécharger
       <input type="file" name="image_file" accept="image/*">
     </label>
 
-    <label>Ou URL image
-      <input name="image_url" placeholder="https://example.com/image.jpg" value="{{ form.image_url if form.image_url }}">
+    <label>Ou URL de l'image
+      <input name="image_url" placeholder="URL de l'image" value="{{ form.image_url if form.image_url }}">
     </label>
 
-    <label>Catégorie
-      Catégorie<br>
+    <label>Catégorie<br>
       <select name="category" required>
-        <option value="">-- choisir --</option>
+        <option value="">-- Choisir --</option>
         {% for cat in categories %}
           <option value="{{ cat.id }}" {% if form.category and form.category|int == cat.id %}selected{% endif %}>{{ cat.name }}</option>
         {% endfor %}
@@ -28,24 +27,24 @@
       </div>
     </label>
 
-    <label>Thème principal
-      <input name="theme" value="{{ form.theme if form.theme }}">
+    <label>Thème 1
+      <input name="theme" value="{{ form.theme if form.theme }}" placeholder="Thème 1">
     </label>
 
-    <label>Thème lié
-      <input name="related_theme" value="{{ form.related_theme if form.related_theme }}">
+    <label>Thème 2
+      <input name="related_theme" value="{{ form.related_theme if form.related_theme }}" placeholder="Thème 2">
     </label>
 
     <label>Description (max 200 caractères)
-      <textarea name="description" maxlength="200">{{ form.description if form.description }}</textarea>
+      <textarea name="description" maxlength="200" placeholder="Description de l'entrée">{{ form.description if form.description }}</textarea>
       <div class="char-count"><span id="count">0</span>/200</div>
     </label>
 
-    <label>Lien (http(s)://...)
-      <input name="link" value="{{ form.link if form.link }}">
+    <label>Lien
+      <input name="link" value="{{ form.link if form.link }}" placeholder="URL du lien">
     </label>
 
-    <button type="submit">Ajouter</button>
+  <button type="submit">Ajouter une entrée</button>
   </form>
 </div>
 

@@ -1,0 +1,11 @@
+.category-badge {
+  border-width: 60px !important;
+  border-style: solid !important;
+  border-color: var(--category-color, #111) !important;
+  font-weight: 500;
+  padding: 6px 12px;
+  border-radius: 20px !important;
+  background: rgba(255,255,255,0.5) !important;
+  color: #111 !important;
+  box-shadow: 0 0 0 8px var(--category-color, #111) !important;
+}
