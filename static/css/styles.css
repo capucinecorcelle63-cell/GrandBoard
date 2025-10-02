@@ -63,11 +63,11 @@ body{
   gap: 16px;
 }
 
-.card{
+.grandboard-card {
   background: #fff;
   border-radius: 4px !important;
   padding: 40px !important;
-  box-shadow: 0 0 0 80px var(--category-color, #111), 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 0 0 120px var(--category-color, #111), 0 2px 8px rgba(0,0,0,0.06);
   box-sizing: border-box !important;
   display:flex;
   flex-direction:column;
