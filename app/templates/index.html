@@ -56,7 +56,7 @@
         {% for entry in entries %}
           <div class="col">
               <a href="{{ url_for('main.edit_entry', entry_id=entry[0].id) }}" style="text-decoration: none;">
-                <article class="grandboard-card h-100 entry-card" style="--category-color: {{ entry[1] }}; background-color: {{ entry[1] }}">
+                <article class="grandboard-card h-100 entry-card" style="--category-color: {{ entry[1] }}; background-color: {{ entry[1] }};">
                 {% if entry[0].image_filename %}
                   <img src="{{ url_for('static', filename=entry[0].image_filename) }}" class="card-img-top entry-image" alt="{{ entry[0].title }}">
                 {% elif entry[0].image_url %}
