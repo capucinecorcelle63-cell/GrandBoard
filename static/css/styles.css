@@ -67,7 +67,7 @@ body{
   background: #fff;
   border-radius: 4px !important;
   padding: 40px !important;
-  border: 8px solid var(--category-color, #111) !important;
+  border: 4px solid var(--category-color, #111) !important;
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   box-sizing: border-box !important;
   display:flex;
