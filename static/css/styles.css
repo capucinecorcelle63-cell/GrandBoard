@@ -65,9 +65,9 @@ body{
 
 .grandboard-card {
   background: #fff;
-  border-radius: 8px !important;
+  border-radius: 20px !important;
   padding: 40px !important;
-  box-shadow: 0 0 0 8px var(--category-color, #111), 0 2px 8px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
   box-sizing: border-box !important;
   display:flex;
   flex-direction:column;
