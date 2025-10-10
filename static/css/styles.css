@@ -60,26 +60,61 @@ body{
 .grid{
   display:grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 16px;
+  gap: 32px;
+}
+
+.row-cols-1 .col,
+.row-cols-md-2 .col,
+.row-cols-xl-3 .col {
+  margin-bottom: 32px;
 }
 
 .grandboard-card {
   background: #fff;
   border-radius: 24px !important;
-  padding: 64px 48px !important;
+  padding: 0 !important;
   box-shadow: 0 8px 32px rgba(0,0,0,0.12);
   box-sizing: border-box !important;
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  min-height: 700px;
+  display: flex;
+  flex-direction: column;
+  min-height: 600px;
+  height: 600px;
+  max-height: 600px;
+  margin-bottom: 0 !important;
+  overflow: hidden;
 }
 
+/* Ajouter du padding autour du titre */
 .grandboard-card .card-title {
   font-size: 2.2rem !important;
+  padding: 0 12px;
+}
+/* Augmenter la taille de la partie sous la photo et ajouter du padding */
+.grandboard-card .card-body {
+  min-height: 320px;
+  padding-left: 64px;
+  padding-right: 64px;
+  gap: 24px;
+  padding-top: 32px;
+  padding-bottom: 32px;
+  overflow: visible;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.grandboard-card .entry-image {
+  height: 48%;
+  object-fit: cover;
+  border-top-left-radius: 1.2rem;
+  border-top-right-radius: 1.2rem;
+  width: 100%;
+  margin-bottom: 0;
 }
 .grandboard-card .card-text {
   font-size: 1.3rem !important;
+  white-space: normal;
+  overflow: visible;
+  word-break: break-word;
 }
 .card-image{
   width:100%;
